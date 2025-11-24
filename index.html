@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xavier Hsu | Portfolio</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&family=Consolas&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- 導覽列 -->
+    <nav class="navbar">
+        <div class="logo">Xavier Hsu</div>
+
+        <!-- ★★★ [NEW] 新增：漢堡按鈕 (手機版才會顯示) ★★★ -->
+        <div class="hamburger">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
+        <!-- ★★★ 結束 ★★★ -->
+
+        <div class="menu">
+            <!-- 加上翻譯標籤 -->
+            <a href="index.html" data-lang="nav-home">Home</a>
+            <a href="about.html" data-lang="nav-about">About</a>
+            <a href="portfolio.html" data-lang="nav-portfolio">Portfolio</a>
+            <a href="contact.html" data-lang="nav-contact">Contact</a>
+
+            <!-- 語言選擇下拉選單 -->
+            <div class="lang-dropdown">
+                <button class="lang-btn">🌐 Language</button>
+                <div class="lang-content">
+                    <a href="#" onclick="changeLanguage('en')">English</a>
+                    <a href="#" onclick="changeLanguage('zh')">中文</a>
+                    <a href="#" onclick="changeLanguage('jp')">日本語</a>
+                    <a href="#" onclick="changeLanguage('kr')">한국어</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主視覺區塊 -->
+    <header class="hero">
+        <div class="hero-content">
+            <h1 data-lang="hero-title">Hi, I'm Xavier Hsu</h1>
+            <p class="subtitle" data-lang="hero-subtitle">Web Developer & Designer</p>
+            <p style="color: #cbd5e1;" data-lang="hero-desc">Welcome to my digital space. I specialize in building creative and interactive web experiences.</p>
+            
+            <!-- 流星按鈕 -->
+            <button class="star-btn" onclick="location.href='about.html'">
+                <span data-lang="btn-more">More About Me</span>
+                <div class="star-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 784.11 815.53"><path class="fil0" d="M392.05 0c-20.9,210.08 -184.06,378.41 -392.05,407.78 207.96,29.37 371.12,197.68 392.05,407.74 20.93,-210.06 184.09,-378.37 392.05,-407.74 -207.98,-29.38 -371.16,-197.69 -392.06,-407.78z"/></svg>
+                </div>
+                <div class="star-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 784.11 815.53"><path class="fil0" d="M392.05 0c-20.9,210.08 -184.06,378.41 -392.05,407.78 207.96,29.37 371.12,197.68 392.05,407.74 20.93,-210.06 184.09,-378.37 392.05,-407.74 -207.98,-29.38 -371.16,-197.69 -392.06,-407.78z"/></svg>
+                </div>
+                <div class="star-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 784.11 815.53"><path class="fil0" d="M392.05 0c-20.9,210.08 -184.06,378.41 -392.05,407.78 207.96,29.37 371.12,197.68 392.05,407.74 20.93,-210.06 184.09,-378.37 392.05,-407.74 -207.98,-29.38 -371.16,-197.69 -392.06,-407.78z"/></svg>
+                </div>
+            </button>
+        </div>
+
+        <div class="hero-image">
+            <div class="image-wrapper">
+                <img src="images/風景/sea.jpg" alt="Profile Picture" class="main-img">
+                <!-- 隱藏的側邊介紹卡片 -->
+                <div class="info-panel">
+                    <h3 data-lang="info-title">My Vibe</h3>
+                    <p data-lang="info-photo">📸 Photography</p>
+                    <p data-lang="info-coding">💻 Coding</p>
+                    <p data-lang="info-coffee">☕ Coffee Lover</p>
+                    <div class="deco-line"></div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="content-section">
+        <h2 data-lang="skills-title">My Skills</h2>
+        <div class="skills-grid">
+            <div class="card vscode">VS Code</div>
+            <div class="card html">HTML5</div>
+            <div class="card css">CSS3</div>
+            <div class="card design">Web Design</div>
+        </div>
+    </section>
+
+    <!-- 聯絡方式區塊 -->
+    <section class="content-section" style="padding-bottom: 100px;">
+        <h2 data-lang="contact-title">Get In Touch</h2>
+        <p style="color: #94a3b8; margin-bottom: 40px;" data-lang="contact-desc">
+            Got a project in mind? Let's talk.
+        </p>
+
+        <button class="send-btn">
+            <div class="btn-outline"></div> 
+            <div class="btn-content">
+                <span class="btn-icon">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M22 2L11 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M22 2L15 22L11 13L2 9L22 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </span>
+                <span class="btn-text" data-lang="btn-send">Send Message</span>
+            </div>
+        </button>
+    </section>
+
+    <footer>
+        <p data-lang="footer-text">Copyright &copy; 2024 Xavier Hsu. All Rights Reserved.</p>
+    </footer>
+
+    <!-- 引入 JS -->
+    <script src="js/script.js"></script>
+
+</body>
+</html>

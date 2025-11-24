@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Circuits Report | Xavier Hsu</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&family=Consolas&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- 導覽列 (保持跟首頁一致) -->
+    <nav class="navbar">
+        <div class="logo">Xavier Hsu</div>
+        <div class="hamburger">
+            <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+        </div>
+        <div class="menu">
+            <a href="index.html" data-lang="nav-home">Home</a>
+            <a href="about.html" data-lang="nav-about">About</a>
+            <a href="portfolio.html" data-lang="nav-portfolio">Portfolio</a>
+            <a href="#" data-lang="nav-contact">Contact</a>
+            <div class="lang-dropdown">
+                <button class="lang-btn">🌐 Language</button>
+                <div class="lang-content">
+                    <a href="#" onclick="changeLanguage('en')">English</a>
+                    <a href="#" onclick="changeLanguage('zh')">中文</a>
+                    <a href="#" onclick="changeLanguage('jp')">日本語</a>
+                    <a href="#" onclick="changeLanguage('kr')">한국어</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ★★★ 專案詳細內容容器 ★★★ -->
+    <main class="proj-container">
+        
+        <!-- 1. 標題區塊 -->
+        <header class="proj-header">
+            <!-- 回上一頁連結 -->
+            <a href="portfolio.html" class="back-link">&larr; Back to Portfolio</a>
+            
+            <h1 data-lang="p1-title">Homework: Circuits and Waveforms</h1>
+            <p class="proj-subtitle" data-lang="p1-subtitle">High school tutor report & analysis.</p>
+            
+            <!-- 科技感標籤 -->
+            <div class="proj-tags">
+                <span class="tag">#Circuit</span>
+                <span class="tag">#Electronics</span>
+                <span class="tag">#Report</span>
+                <span class="tag">#2023</span>
+            </div>
+        </header>
+
+        <!-- 2. 圖片展示區 (模擬螢幕邊框) -->
+        <div class="proj-showcase">
+            <div class="screen-frame">
+                <!-- 這裡用的是你剛剛提供的圖片路徑 -->
+                <img src="images/風景/sea.jpg" alt="Circuits Report Preview">
+            </div>
+        </div>
+
+        <!-- 3. 文字說明與按鈕區 -->
+        <div class="proj-content">
+            <div class="proj-text">
+                <h2 data-lang="about-project">Project Overview</h2>
+                <p data-lang="p1-desc-1">
+                    這是一份關於電子電路與波形的詳細分析報告。內容涵蓋了示波器的使用方法、波形觀測紀錄以及電路除錯的過程。
+                </p>
+                <p data-lang="p1-desc-2">
+                    透過這份報告，展示了我對於基礎電子學的理解，以及將理論應用於實際測量的能力。
+                </p>
+            </div>
+
+            <!-- 互動按鈕區 -->
+            <div class="proj-actions">
+                <!-- 按鈕 1: 看 PDF (如果以後有PDF檔案，記得改 href) -->
+                <a href="#" target="_blank" class="action-btn primary">
+                    <span>📄 View PDF Report</span>
+                </a>
+                
+                <!-- 按鈕 2: 連回原本 Google Sites -->
+                <a href="https://sites.google.com/view/xavier-hsu-asian" target="_blank" class="action-btn secondary">
+                    <span>🔗 Original Site</span>
+                </a>
+            </div>
+        </div>
+
+    </main>
+
+    <footer>
+        <p data-lang="footer-text">Copyright &copy; 2024 Xavier Hsu. All Rights Reserved.</p>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

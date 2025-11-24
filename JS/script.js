@@ -1,0 +1,264 @@
+/* Single clean script: i18n, send button, autofill-label handling, and lightbox */
+
+// translations will be loaded from `js/langs.json` if available.
+let translations = {};
+
+function changeLanguage(lang) {
+  localStorage.setItem('preferredLanguage', lang);
+  document.querySelectorAll('[data-lang]').forEach(el => {
+    const key = el.getAttribute('data-lang');
+    if (translations[lang] && translations[lang][key]) el.innerHTML = translations[lang][key];
+  });
+}
+
+function robustCopy(text) {
+  const ta = document.createElement('textarea');
+  ta.value = text;
+  ta.style.position = 'fixed'; ta.style.opacity = '0';
+  document.body.appendChild(ta);
+  ta.select();
+  try { document.execCommand('copy'); } catch (e) { console.error(e); }
+  document.body.removeChild(ta);
+}
+
+document.addEventListener('DOMContentLoaded', async () => {
+  // load translations from external file (fallback to existing object if fetch fails)
+  try {
+    const res = await fetch('js/langs.json');
+    if (res.ok) translations = await res.json();
+  } catch (err) {
+    console.warn('Could not load js/langs.json, falling back to minimal translations.', err);
+    // full fallback: embed complete translations to ensure offline/file:// 開啟也能運作
+    translations = {
+      "en": {
+        "nav-home": "Home",
+        "nav-about": "About",
+        "nav-portfolio": "Portfolio",
+        "nav-contact": "Contact",
+        "hero-title": "Hi, I'm Xavier Hsu",
+        "hero-subtitle": "Web Developer & Designer",
+        "hero-desc": "Welcome to my digital space. I specialize in building creative and interactive web experiences.",
+        "btn-more": "More About Me",
+        "skills-title": "My Skills",
+        "footer-text": "Copyright © 2024 Xavier Hsu. All Rights Reserved.",
+        "info-title": "My Vibe",
+        "info-photo": "📸 Photography",
+        "info-coding": "💻 Coding",
+        "info-coffee": "☕ Coffee Lover",
+        "contact-title": "Get In Touch",
+        "contact-desc": "Got a project in mind? Let's talk.",
+        "btn-send": "Send Message",
+        "form-name": "Name",
+        "form-email": "Email",
+        "form-message": "Message",
+        "tech-stack": "Technologies Used",
+        "about-project": "About The Project",
+        "btn-live": "View Live Site",
+        "btn-repo": "View Repository",
+        "features": "Key Features",
+        "p1-title": "Project Name 01",
+        "p1-subtitle": "A brief description of this project. What tech stack did you use? What problem did it solve?",
+        "p1-desc-1": "This section is for a more detailed description of your project. You can explain the background of the project, the challenges you faced, and the solutions you came up with.",
+        "p1-desc-2": "For example, you could talk about the design process, the development workflow, or any interesting features you implemented.",
+        "p2-title": "Photography Collection",
+        "p2-subtitle": "My travel photography portfolio. Capturing moments from nature and urban life.",
+        "p3-title": "About This Website",
+        "p3-subtitle": "This website itself is one of my projects! Built with HTML, CSS, and VS Code.",
+        "f1": "<strong>Multi-language Support:</strong> Users can switch between 4 languages (English, Chinese, Japanese, Korean) and the preference is saved locally.",
+        "f2": "<strong>Responsive Web Design (RWD):</strong> The layout adapts seamlessly to different screen sizes.",
+        "f3": "<strong>Interactive Animations:</strong> Rich CSS animations and transitions are used to create a dynamic and engaging user experience.",
+        "f4": "<strong>Robust Contact Form:</strong> An elegant contact form with floating labels and a unique animated send button.",
+        "f5": "<strong>Clean Codebase:</strong> The project is built with clean, well-structured HTML, CSS, and JavaScript."
+      },
+      "zh": {
+        "nav-home": "首頁",
+        "nav-about": "關於我",
+        "nav-portfolio": "作品集",
+        "nav-contact": "聯絡方式",
+        "hero-title": "你好，我是 Xavier Hsu",
+        "hero-subtitle": "網頁設計師 & 開發者",
+        "hero-desc": "歡迎來到我的數位空間。我專注於創造富有創意與互動性的網頁體驗。",
+        "btn-more": "更多關於我",
+        "skills-title": "我的專長",
+        "footer-text": "版權所有 © 2024 Xavier Hsu. All Rights Reserved.",
+        "info-title": "個人風格",
+        "info-photo": "📸 熱愛攝影",
+        "info-coding": "💻 程式開發",
+        "info-coffee": "☕ 咖啡成癮",
+        "contact-title": "聯絡我",
+        "contact-desc": "有什麼合作的想法嗎？歡迎來信聊聊。",
+        "btn-send": "發送訊息",
+        "form-name": "您的姓名",
+        "form-email": "電子信箱",
+        "form-message": "您的訊息",
+        "tech-stack": "使用技術",
+        "about-project": "關於專案",
+        "btn-live": "查看網站",
+        "btn-repo": "程式碼倉庫",
+        "features": "主要特色",
+        "p1-title": "專案名稱 01",
+        "p1-subtitle": "關於此專案的簡短描述。您使用了什麼技術堆疊？它解決了什麼問題？",
+        "p1-desc-1": "這個區塊用於更詳細地描述您的專案。您可以解釋專案的背景、面臨的挑戰以及您提出的解決方案。",
+        "p1-desc-2": "例如，您可以談論設計過程、開發流程或您實現的任何有趣功能。",
+        "p2-title": "攝影作品集",
+        "p2-subtitle": "我的旅行攝影作品集。捕捉自然與都市生活中的瞬間。",
+        "p3-title": "關於本網站",
+        "p3-subtitle": "這個網站本身就是我的專案之一！使用 HTML、CSS 和 VS Code 打造。",
+        "f1": "<strong>多國語言支援：</strong> 使用者可以在 4 種語言之間切換，偏好會被儲存在本地。",
+        "f2": "<strong>響應式網頁設計：</strong> 佈局能夠無縫適應不同螢幕尺寸。",
+        "f3": "<strong>互動式動畫：</strong> 使用豐富的 CSS 動畫和過渡效果。",
+        "f4": "<strong>功能完善的聯絡表單：</strong> 擁有浮動標籤和獨特動畫發送按鈕。",
+        "f5": "<strong>乾淨的程式碼庫：</strong> 採用乾淨、結構良好的 HTML、CSS 和 JavaScript。"
+      },
+      "jp": {
+        "nav-home": "ホーム",
+        "nav-about": "私について",
+        "nav-portfolio": "ポートフォリオ",
+        "nav-contact": "お問い合わせ",
+        "hero-title": "こんにちは、Xavier Hsuです",
+        "hero-subtitle": "ウェブ開発者 & デザイナー",
+        "hero-desc": "私のデジタルスペースへようこそ。創造的でインタラクティブなウェブ体験を構築します。",
+        "btn-more": "もっと詳しく",
+        "skills-title": "スキル",
+        "footer-text": "著作権 © 2024 Xavier Hsu. All Rights Reserved.",
+        "info-title": "バイブス",
+        "info-photo": "📸 写真撮影",
+        "info-coding": "💻 コーディング",
+        "info-coffee": "☕ コーヒー愛好家",
+        "contact-title": "お問い合わせ",
+        "contact-desc": "プロジェクトのご相談ですか？お話ししましょう。",
+        "btn-send": "送信する",
+        "form-name": "お名前",
+        "form-email": "メールアドレス",
+        "form-message": "メッセージ",
+        "tech-stack": "使用技術",
+        "about-project": "プロジェクトについて",
+        "btn-live": "サイトを見る",
+        "btn-repo": "リポジトリを見る",
+        "features": "主な特徴",
+        "p1-title": "プロジェクト名 01",
+        "p1-subtitle": "このプロジェクトの簡単な説明。どの技術スタックを使用しましたか？",
+        "p1-desc-1": "このセクションでは、プロジェクトについて詳しく説明できます。",
+        "p1-desc-2": "設計プロセスや開発ワークフローについて説明できます。",
+        "p2-title": "写真コレクション",
+        "p2-subtitle": "旅行写真のポートフォリオ。自然と都市の瞬間を収めています。",
+        "p3-title": "このサイトについて",
+        "p3-subtitle": "このウェブサイト自体が私のプロジェクトの一つです！",
+        "f1": "<strong>多言語対応：</strong> ユーザーは複数の言語を切り替えられます。",
+        "f2": "<strong>レスポンシブ：</strong> レイアウトは様々な画面サイズに対応します。",
+        "f3": "<strong>アニメーション：</strong> リッチな CSS アニメーションを使用します。",
+        "f4": "<strong>連絡フォーム：</strong> フローティングラベルとアニメーション送信ボタン。",
+        "f5": "<strong>クリーンなコード：</strong> 保守しやすく構造化されています。"
+      },
+      "kr": {
+        "nav-home": "홈",
+        "nav-about": "소개",
+        "nav-portfolio": "포트폴리오",
+        "nav-contact": "연락처",
+        "hero-title": "안녕하세요, Xavier Hsu입니다",
+        "hero-subtitle": "웹 개발자 & 디자이너",
+        "hero-desc": "나의 디지털 공간에 오신 것을 환영합니다. 창의적이고 인터랙티브한 웹 경험을 만듭니다.",
+        "btn-more": "자세히 보기",
+        "skills-title": "보유 기술",
+        "footer-text": "저작권 © 2024 Xavier Hsu. All Rights Reserved.",
+        "info-title": "나의 스타일",
+        "info-photo": "📸 사진 촬영",
+        "info-coding": "💻 코딩",
+        "info-coffee": "☕ 커피 애호가",
+        "contact-title": "연락하기",
+        "contact-desc": "프로젝트 아이디어가 있으신가요? 이야기해 봅시다.",
+        "btn-send": "메시지 보내기",
+        "form-name": "이름",
+        "form-email": "이메일",
+        "form-message": "메시지",
+        "tech-stack": "사용된 기술",
+        "about-project": "프로젝트 소개",
+        "btn-live": "라이브 사이트 보기",
+        "btn-repo": "저장소 보기",
+        "features": "주요 기능",
+        "p1-title": "프로젝트 이름 01",
+        "p1-subtitle": "이 프로젝트의 간단한 설명입니다.",
+        "p1-desc-1": "이 섹션에서는 프로젝트에 대해 더 자세히 설명할 수 있습니다.",
+        "p1-desc-2": "디자인 프로세스나 개발 워플로우에 대해 설명하세요.",
+        "p2-title": "사진 컬렉션",
+        "p2-subtitle": "여행 사진 포트폴리오입니다.",
+        "p3-title": "이 웹사이트에 대하여",
+        "p3-subtitle": "이 사이트 자체가 제 프로젝트 중 하나입니다.",
+        "f1": "<strong>다국어 지원:</strong> 사용자가 언어를 전환할 수 있습니다.",
+        "f2": "<strong>반응형:</strong> 다양한 화면 크기에 대응합니다.",
+        "f3": "<strong>애니메이션:</strong> 풍부한 CSS 애니메이션을 사용합니다.",
+        "f4": "<strong>연락 폼:</strong> 플로팅 라벨과 애니메이션 전송 버튼이 있습니다.",
+        "f5": "<strong>깨끗한 코드베이스:</strong> 유지보수가 쉽도록 구조화되어 있습니다."
+      }
+    };
+  }
+
+  // i18n
+  const savedLang = localStorage.getItem('preferredLanguage') || 'en';
+  changeLanguage(savedLang);
+
+  // hamburger (mobile)
+  const hamburger = document.querySelector('.hamburger');
+  const menu = document.querySelector('.menu');
+  if (hamburger && menu) hamburger.addEventListener('click', () => menu.classList.toggle('active'));
+
+  // send button animation + mailto fallback
+  const myEmail = 'luxmorleyclub@gmail.com';
+  const sendBtn = document.querySelector('.send-btn');
+  const btnText = document.querySelector('.btn-text');
+  const btnIcon = document.querySelector('.btn-icon svg');
+  if (sendBtn) {
+    sendBtn.addEventListener('click', () => {
+      const lang = localStorage.getItem('preferredLanguage') || 'en';
+      const sending = { en: 'Sending...', zh: '發送中...' };
+      const copied = { en: 'Email Copied!', zh: '信箱已複製！' };
+      if (btnIcon) {
+        btnIcon.style.transition = 'transform 0.6s ease, opacity 0.6s ease';
+        btnIcon.style.transform = 'translateX(120px) translateY(-120px) scale(0.5)';
+        btnIcon.style.opacity = '0';
+      }
+      if (btnText) btnText.innerText = sending[lang] || sending.en;
+      setTimeout(() => {
+        robustCopy(myEmail);
+        if (btnText) btnText.innerText = copied[lang] || copied.en;
+        setTimeout(() => {
+          const subject = 'Hello';
+          const body = 'Hi, I saw your portfolio and would like to contact you.';
+          window.location.href = `mailto:${myEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        }, 500);
+        setTimeout(() => {
+          if (btnText) btnText.innerText = translations[lang] && translations[lang]['btn-send'] ? translations[lang]['btn-send'] : 'Send Message';
+          if (btnIcon) { btnIcon.style.transition = 'none'; btnIcon.style.transform = ''; btnIcon.style.opacity = '1'; setTimeout(() => { btnIcon.style.transition = 'transform 0.4s ease, opacity 0.4s ease'; }, 50); }
+        }, 2500);
+      }, 600);
+    });
+  }
+
+  // Floating labels + autofill detection (animationstart + polling fallback)
+  const inputs = Array.from(document.querySelectorAll('.form-group input, .form-group textarea'));
+  function updateLabel(input) {
+    const label = input && input.nextElementSibling;
+    if (!label) return;
+    if (input.value && input.value.trim() !== '') label.classList.add('active'); else label.classList.remove('active');
+  }
+  if (inputs.length) {
+    inputs.forEach(i => {
+      updateLabel(i);
+      i.addEventListener('input', () => updateLabel(i));
+      i.addEventListener('change', () => updateLabel(i));
+      i.addEventListener('animationstart', (e) => { if (e.animationName === 'onAutoFillStart') setTimeout(() => updateLabel(i), 50); });
+    });
+    // polling fallback for browsers that don't fire animationstart
+    let polls = 0; const maxPolls = 10;
+    const poll = setInterval(() => { inputs.forEach(updateLabel); polls++; if (polls >= maxPolls) clearInterval(poll); }, 200);
+  }
+
+  // Lightbox
+  const lightbox = document.getElementById('lightbox');
+  if (lightbox) {
+    const lbImg = document.getElementById('lightbox-img');
+    document.querySelectorAll('.photo-item img').forEach(it => it.addEventListener('click', () => { lightbox.classList.add('active'); if (lbImg) lbImg.src = it.src; }));
+    const closeBtn = document.querySelector('.lightbox-close'); if (closeBtn) closeBtn.addEventListener('click', () => lightbox.classList.remove('active'));
+    lightbox.addEventListener('click', e => { if (e.target === lightbox) lightbox.classList.remove('active'); });
+  }
+});

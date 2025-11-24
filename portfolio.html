@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio | Xavier Hsu</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- 1. 導覽列 (Portfolio 變亮藍色) -->
+    <nav class="navbar">
+        <div class="logo">Xavier Hsu</div>
+
+        <!-- 漢堡按鈕 -->
+        <div class="hamburger">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
+
+        <div class="menu">
+            <a href="index.html" data-lang="nav-home">Home</a>
+            <a href="about.html" data-lang="nav-about">About</a>
+            <a href="portfolio.html" data-lang="nav-portfolio" style="color: #38bdf8;">Portfolio</a>
+            <a href="contact.html" data-lang="nav-contact">Contact</a>
+
+            <!-- 語言選擇下拉選單 -->
+            <div class="lang-dropdown">
+                <button class="lang-btn">🌐 Language</button>
+                <div class="lang-content">
+                    <a href="#" onclick="changeLanguage('en')">English</a>
+                    <a href="#" onclick="changeLanguage('zh')">中文</a>
+                    <a href="#" onclick="changeLanguage('jp')">日本語</a>
+                    <a href="#" onclick="changeLanguage('kr')">한국어</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 2. 標題區塊 -->
+    <section class="content-section" style="background: transparent; padding-bottom: 20px;">
+        <h1>My Projects</h1>
+        <p style="max-width: 800px; margin: 0 auto; color: #94a3b8;">
+            Here is a showcase of my latest work. <br>
+            (這裡是你未來展示作品的地方，目前先用範例擋著)
+        </p>
+    </section>
+
+    <!-- 3. 作品集藝廊 (Gallery) -->
+    <section class="content-section">
+        <div class="project-grid">
+
+            <!-- 專案 1 -->
+            <div class="project-card">
+                <!-- 圖片區域 -->
+                <div class="project-img">
+                    <!-- 先暫時用 sea.jpg，之後你可以換成專案截圖 -->
+                    <img src="images/project/unnamed.png" alt="Project 1">
+                </div>
+                <!-- 文字內容 -->
+                <div class="project-info">
+                    <h3>Project Name 01</h3>
+                    <p>A brief description of this project. What tech stack did you use? What problem did it solve?</p>
+                    <a href="project-01.html" class="project-link">View Details &rarr;</a>
+                </div>
+            </div>
+
+            <!-- 專案 2 -->
+            <div class="project-card">
+                <div class="project-img">
+                    <img src="images/豐年祭工作/S__11526191_0.jpg" alt="Project 2">
+                </div>
+                <div class="project-info">
+                    <h3>Photography Collection</h3>
+                    <p>My travel photography portfolio. Capturing moments from nature and urban life.</p>
+                    <a href="project-photo.html" class="project-link">View Details &rarr;</a>
+                </div>
+            </div>
+
+            <!-- 專案 3 -->
+            <div class="project-card">
+                <div class="project-img">
+                    <img src="images/project/code.png" alt="Project 3">
+                </div>
+                <div class="project-info">
+                    <h3>Coding Practice</h3>
+                    <p>This website itself is one of my projects! Built with HTML, CSS, and VS Code.</p>
+                    <a href="project-coding.html" class="project-link">View Details &rarr;</a>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <footer>
+        <p data-lang="footer-text">Copyright &copy; 2024 Xavier Hsu. All Rights Reserved.</p>
+    </footer>
+
+    <!-- 引入 JS -->
+    <script src="js/script.js"></script>
+
+</body>
+</html>
